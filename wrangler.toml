@@ -1,0 +1,7 @@
+# Cloudflare Workers static assets. The site is plain HTML, so the Worker does
+# nothing but serve this directory; no build step, no framework.
+name = "meso-site"
+compatibility_date = "2026-08-09"
+
+[assets]
+directory = "."
