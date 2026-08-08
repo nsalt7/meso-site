@@ -6,8 +6,10 @@
 <title>Meso: Hypertrophy Coach</title>
 <meta name="description" content="A hypertrophy training app that decides your next set from what you actually lifted. Every rule cited to the research. Works offline, no account.">
 <meta property="og:title" content="Meso: Hypertrophy Coach">
-<meta property="og:description" content="Volume you have to earn. Meso reads your logged performance and programs the next week from it.">
+<meta property="og:description" content="Volume you have to earn. Meso reads your logged performance and writes next week from it.">
+<meta property="og:image" content="shots/02-muscles.jpg">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#05070f">
 <style>
   @font-face {
     font-family: 'Barlow Condensed'; font-style: normal; font-weight: 700; font-display: swap;
@@ -15,156 +17,201 @@
   }
   :root {
     --paper: #05070f; --card: #12172a; --ink: #f2f4ff;
-    --ink-2: rgba(210, 219, 250, 0.66); --ink-3: rgba(210, 219, 250, 0.38);
-    --line: rgba(126, 138, 178, 0.28); --accent: #3e5eff; --accent-text: #93a6ff;
+    --ink-2: rgba(210, 219, 250, 0.68); --ink-3: rgba(210, 219, 250, 0.4);
+    --line: rgba(126, 138, 178, 0.24); --accent: #3e5eff; --accent-text: #93a6ff;
+    --good: #30d158;
     --display: 'Barlow Condensed', -apple-system, 'SF Pro Display', sans-serif;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0; background: var(--paper); color: var(--ink);
-    font: 17px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    font: 17px/1.62 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
   }
-  a { color: var(--accent-text); }
-  .wrap { max-width: 940px; margin: 0 auto; padding: 0 20px; }
-  header { padding: 64px 0 8px; }
-  .brand { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; }
+  a { color: var(--accent-text); text-underline-offset: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- hero: the gym behind, the product in front ---------- */
+  .hero { position: relative; overflow: hidden; padding: 0 0 40px; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('hero-bg.jpg') center/cover no-repeat;
+    filter: grayscale(25%) brightness(0.55); z-index: -2;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(5,7,15,0.55) 0%, rgba(5,7,15,0.82) 55%, var(--paper) 100%);
+  }
+  .nav { display: flex; align-items: center; gap: 14px; padding: 26px 0 0; }
+  .mark { width: 34px; height: 34px; border-radius: 9px; background: #000; display: grid; place-items: center; }
+  .mark img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 21px; letter-spacing: 0.04em; }
+  .nav .spacer { flex: 1; }
+  .nav a { color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 600; }
+  .hero-grid { display: grid; gap: 34px; grid-template-columns: 1.05fr 0.95fr; align-items: center; padding: 54px 0 0; }
   h1 {
-    font-family: var(--display); font-weight: 700; font-size: clamp(40px, 8vw, 68px);
-    line-height: 1.04; margin: 22px 0 0; text-wrap: balance;
+    font-family: var(--display); font-weight: 700; font-size: clamp(46px, 7.4vw, 82px);
+    line-height: 0.98; margin: 0; letter-spacing: -0.01em; text-wrap: balance;
   }
   h1 em { font-style: italic; color: var(--accent-text); }
-  .lede { font-size: clamp(18px, 2.4vw, 21px); color: var(--ink-2); max-width: 46ch; margin: 18px 0 0; }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 8px; align-items: center; }
+  .lede { font-size: clamp(17px, 2vw, 20px); color: var(--ink-2); max-width: 44ch; margin: 20px 0 0; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 10px; align-items: center; }
   .btn {
     display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
-    font-weight: 650; padding: 13px 22px; border-radius: 12px;
+    font-weight: 650; padding: 14px 24px; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(62, 94, 255, 0.35);
   }
-  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-  .note { color: var(--ink-3); font-size: 14px; }
-  section { padding: 56px 0; border-top: 1px solid var(--line); margin-top: 56px; }
-  h2 {
-    font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4.6vw, 40px);
-    line-height: 1.1; margin: 0 0 14px;
+  .btn.ghost { background: rgba(255,255,255,0.06); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600;
+    color: var(--ink-2); border: 1px solid var(--line); border-radius: 99px; padding: 6px 13px;
   }
-  .grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-  .card { background: var(--card); border-radius: 16px; padding: 22px; }
-  .card h3 { font-size: 18px; margin: 0 0 8px; }
+  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
+  .hero-shot { position: relative; }
+  .hero-shot img {
+    width: 100%; max-width: 340px; margin: 0 auto; display: block; border-radius: 22px;
+    border: 1px solid var(--line); box-shadow: 0 40px 90px rgba(0,0,0,0.6);
+  }
+
+  /* ---------- alternating feature rows ---------- */
+  section { padding: 78px 0 0; }
+  .row { display: grid; gap: 40px; grid-template-columns: 1fr 1fr; align-items: center; padding: 34px 0; }
+  .row:nth-child(even) .row-media { order: 2; }
+  .row img { width: 100%; max-width: 320px; border-radius: 18px; border: 1px solid var(--line); display: block; margin: 0 auto; }
+  .eyebrow {
+    font-family: var(--display); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: 13px; color: var(--accent-text); margin: 0 0 10px;
+  }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.06; margin: 0 0 12px; }
+  .row p { color: var(--ink-2); margin: 0; }
+
+  /* ---------- rules ---------- */
+  .rules { border-top: 1px solid var(--line); margin-top: 60px; }
+  .rules ol { list-style: none; counter-reset: r; padding: 0; margin: 26px 0 0; }
+  .rules li { counter-increment: r; display: grid; grid-template-columns: 46px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .rules li::before {
+    content: counter(r, decimal-leading-zero); font-family: var(--display); font-weight: 700;
+    font-size: 26px; color: var(--accent-text); line-height: 1.1;
+  }
+  .rules b { display: block; font-weight: 650; margin-bottom: 2px; }
+  .rules span { color: var(--ink-2); font-size: 16px; }
+  .rules cite { display: block; margin-top: 6px; color: var(--ink-3); font-size: 13.5px; font-style: normal; }
+
+  /* ---------- environments ---------- */
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: 26px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .card h3 { font-family: var(--display); font-size: 22px; margin: 0 0 8px; font-weight: 700; }
   .card p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
-  .shots { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); align-items: start; }
-  .shots figure { margin: 0; }
-  .shots img { width: 100%; border-radius: 14px; display: block; border: 1px solid var(--line); }
-  .shots figcaption { color: var(--ink-3); font-size: 14px; margin-top: 10px; }
-  ul.rules { list-style: none; padding: 0; margin: 0; }
-  ul.rules li { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
-  ul.rules li b { color: var(--ink); font-weight: 650; }
-  ul.rules li:last-child { border-bottom: none; }
-  footer { padding: 40px 0 64px; color: var(--ink-3); font-size: 14.5px; }
-  footer a { margin-right: 18px; display: inline-block; }
+
+  footer { margin-top: 78px; border-top: 1px solid var(--line); padding: 34px 0 70px; color: var(--ink-3); font-size: 14.5px; }
+  footer nav a { margin-right: 20px; display: inline-block; margin-bottom: 8px; }
+
+  @media (max-width: 760px) {
+    .hero-grid, .row { grid-template-columns: 1fr; }
+    .row:nth-child(even) .row-media { order: 0; }
+    .hero-grid { padding-top: 34px; }
+  }
   @media (prefers-color-scheme: light) {
     :root {
       --paper: #f2f2f7; --card: #ffffff; --ink: #0b0d14;
-      --ink-2: rgba(60, 60, 67, 0.7); --ink-3: rgba(60, 60, 67, 0.45);
-      --line: rgba(60, 60, 67, 0.16); --accent: #2b48e6; --accent-text: #2440d1;
+      --ink-2: rgba(60, 60, 67, 0.72); --ink-3: rgba(60, 60, 67, 0.48);
+      --line: rgba(60, 60, 67, 0.14); --accent: #2b48e6; --accent-text: #2440d1;
     }
+    .hero::after { background: linear-gradient(180deg, rgba(5,7,15,0.62) 0%, rgba(5,7,15,0.5) 45%, var(--paper) 100%); }
+    .nav a, .brand, h1, .lede, .pill { color: #fff; }
+    .btn.ghost { color: #fff; border-color: rgba(255,255,255,0.28); }
   }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="nav">
+      <div class="mark"><img src="icon.png" alt=""></div>
+      <span class="brand">MESO</span>
+      <span class="spacer"></span>
+      <a href="#rules">The rules</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <h1>Volume you have to <em>earn</em>.</h1>
+        <p class="lede">Meso reads what you actually lifted and writes next week from it. Beat last week and it adds a
+          set. Stall and it holds. Every rule comes from published research, and the papers are in the app.</p>
+        <div class="cta">
+          <a class="btn" href="#rules">See how it decides</a>
+          <a class="btn ghost" href="support.html">Support</a>
+        </div>
+        <span class="pill"><span class="dot"></span> Coming to the App Store · iPhone · works offline, no account</span>
+      </div>
+      <div class="hero-shot"><img src="shots/01-workout.jpg" alt="A Meso workout screen: prescribed weight, rep window and reps in reserve, with last week's numbers beside every set."></div>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
-  <header>
-    <div class="brand">MESO</div>
-    <h1>Volume you have to <em>earn</em>.</h1>
-    <p class="lede">Meso reads what you actually lifted and writes next week from it. Beat last week and it adds a
-      set. Stall and it holds. Every rule comes from published research, and you can read the papers in the app.</p>
-    <div class="cta">
-      <a class="btn" href="#how">How it works</a>
-      <a class="btn ghost" href="support.html">Support</a>
+  <section>
+    <div class="row">
+      <div class="row-media"><img src="shots/02-muscles.jpg" alt="A body map with each muscle coloured by how much work it has had this week against its evidence-based band." loading="lazy"></div>
+      <div>
+        <p class="eyebrow">Coverage</p>
+        <h2>See exactly where the work is going</h2>
+        <p>Every muscle is measured against the weekly volume the research supports, so an under-worked muscle is
+          obvious at a glance rather than a surprise eight weeks later. Tap one and the app explains why it is the
+          colour it is and what would change it.</p>
+      </div>
     </div>
-    <p class="note">Coming to the App Store. iPhone. Works offline, no account needed.</p>
-  </header>
+    <div class="row">
+      <div class="row-media"><img src="shots/06-science.jpg" alt="The Science tab, listing each engine rule with links to the studies behind it." loading="lazy"></div>
+      <div>
+        <p class="eyebrow">Evidence</p>
+        <h2>Every rule cited. Check our work.</h2>
+        <p>Other apps say science-based. Meso shows the papers: each rule the engine follows is written in plain
+          language with its citations, in the app, where you can read them mid-session if you want to.</p>
+      </div>
+    </div>
+  </section>
 
-  <section id="how">
-    <h2>What it does</h2>
+  <section class="rules" id="rules">
+    <p class="eyebrow">How it decides</p>
+    <h2>Five rules, and the research behind them</h2>
+    <ol>
+      <li><div><b>Performance is the accelerator</b><span>Beat last week's best sets on a muscle and it earns one more
+        weekly set. Stall and it holds. Regress and it drops.</span><cite>Mann 2010 · Helms 2018 · Enes 2024</cite></div></li>
+      <li><div><b>Soreness is only a brake</b><span>Soreness tracks damage and novelty, not growth, so it can hold
+        volume back or cut it, but it never earns more.</span><cite>Damas 2016 · Damas 2018</cite></div></li>
+      <li><div><b>Reps first, then load</b><span>Climb the rep window, then add roughly 2.5 to 5 percent. Go heavier
+        than asked and hold it across every set, and that becomes your working weight.</span><cite>Plotkin 2022</cite></div></li>
+      <li><div><b>Failure is rationed</b><span>Sets ramp from three reps in reserve down to one. Only isolation work
+        touches failure, and only in the last hard week.</span><cite>Robinson 2024 · Refalo 2023 · Zourdos 2016</cite></div></li>
+      <li><div><b>Deloads come early when the data says so</b><span>Two weeks of regression across several muscles
+        pulls the deload forward, because a sustained performance drop is the validated overreaching
+        signal.</span><cite>Bell 2023 · Meeusen 2013</cite></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="eyebrow">Anywhere</p>
+    <h2>Gym, home, or a bar in a park</h2>
     <div class="grid">
-      <div class="card">
-        <h3>Tells you the weight</h3>
-        <p>Open a session and the numbers are already there: the load, the rep window, and how many reps to leave in
-          reserve. Lift, log what happened, and the next week is written from it.</p>
-      </div>
-      <div class="card">
-        <h3>Adds volume only when you earn it</h3>
-        <p>Extra sets arrive when your logged performance improves. Soreness and joint pain can hold volume back or
-          cut it, but they never add it, because feeling wrecked is not evidence of growth.</p>
-      </div>
-      <div class="card">
-        <h3>Shows its working</h3>
-        <p>Every rule in the engine is cited to the literature, in plain language, inside the app. If you want to
-          check whether the app is guessing, you can.</p>
-      </div>
+      <div class="card"><h3>Gym</h3><p>Barbells, machines and cables, with plate maths and warm-up ramps built in.</p></div>
+      <div class="card"><h3>Home</h3><p>Programs that need a floor, a wall and a sturdy table. Same engine, different lever.</p></div>
+      <div class="card"><h3>Bar park</h3><p>Calisthenics progressions that advance the movement when you top the rep window. Log vest weight and it switches to load progression.</p></div>
     </div>
   </section>
 
-  <section>
-    <h2>A look at it</h2>
-    <div class="shots">
-      <figure>
-        <img src="shots/01-workout.jpg" alt="A workout screen showing prescribed weight, rep range and reps in reserve, with last week's numbers beside each set." loading="lazy">
-        <figcaption>Your next set, decided from what you actually lifted.</figcaption>
-      </figure>
-      <figure>
-        <img src="shots/02-muscles.jpg" alt="A body map with muscles coloured by how much work they have had this week against an evidence-based band." loading="lazy">
-        <figcaption>Every muscle against the volume the research supports.</figcaption>
-      </figure>
-      <figure>
-        <img src="shots/06-science.jpg" alt="The Science tab, listing each engine rule with links to the studies behind it." loading="lazy">
-        <figcaption>Every rule cited. Check our work.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section>
-    <h2>The rules it runs on</h2>
-    <ul class="rules">
-      <li><b>Performance is the accelerator.</b> Beat last week's best sets on a muscle and it earns one more weekly
-        set; stall and it holds; regress and it drops (Mann 2010; Helms 2018; Enes 2024).</li>
-      <li><b>Soreness is only a brake.</b> Soreness tracks damage and novelty, not growth, so it can hold volume back
-        but never add it (Damas 2016; Damas 2018).</li>
-      <li><b>Reps first, then load.</b> Climb the rep window, then add roughly 2.5 to 5 percent. Go heavier than asked
-        and hold it, and that becomes your working weight (Plotkin 2022).</li>
-      <li><b>Failure is rationed.</b> Sets ramp from 3 reps in reserve down to 1. Only isolation work touches failure,
-        and only in the last hard week (Robinson 2024; Refalo 2023).</li>
-      <li><b>Deloads are scheduled, and early when the data says so.</b> Two weeks of regression across several
-        muscles pulls the deload forward, because a sustained performance drop is the validated overreaching signal
-        (Bell 2023; Meeusen 2013).</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Wherever you train</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Gym</h3>
-        <p>Barbells, machines and cables, with plate maths and warm-up ramps built in.</p>
-      </div>
-      <div class="card">
-        <h3>Home</h3>
-        <p>Programs that need a floor, a wall and a sturdy table. The same engine, different lever.</p>
-      </div>
-      <div class="card">
-        <h3>Bar park</h3>
-        <p>Calisthenics progressions that advance the movement when you top the rep window. Log vest weight and it
-          switches to load progression.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="wrap">
-    <a href="support.html">Support</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="accessibility.html">Accessibility</a>
-    <a href="suitability.html">Training readiness</a>
-    <p style="margin-top:18px">Meso is training guidance, not medical advice.</p>
+  <footer>
+    <nav>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="accessibility.html">Accessibility</a>
+      <a href="suitability.html">Training readiness</a>
+      <a href="mailto:support@mesohypertrophy.com">support@mesohypertrophy.com</a>
+    </nav>
+    <p>Meso is training guidance, not medical advice. Train with your clinician's blessing if something is injured.</p>
   </footer>
 </div>
 </body>
