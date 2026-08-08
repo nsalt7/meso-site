@@ -1,19 +1,171 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meso Privacy Policy</title>
-<style>body{font:16px/1.6 -apple-system,system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#111}h1{font-size:26px}h2{font-size:18px;margin-top:28px}footer{margin-top:40px;color:#666;font-size:13px}</style>
-</head><body>
-<h1>Meso Privacy Policy</h1>
-<p>Effective 10 July 2026. Meso is built local-first: your training data belongs on your phone, not on our servers. We do not run servers, and we do not have accounts.</p>
-<h2>What Meso stores, and where</h2>
-<p>Everything you enter in Meso (workouts, sets, check-ins, notes, settings) is stored on your device. If you enable iCloud, an encrypted backup copy is kept in your personal iCloud key-value storage so your data survives reinstalls and new phones. That copy lives in your Apple account; we cannot read it. You can export or delete all data at any time from the Settings tab.</p>
-<h2>What leaves your device</h2>
-<p>Two things, both purchase-related. When you subscribe to Meso Pro, Apple processes the payment; we never see your payment details. To validate subscriptions, the app talks to RevenueCat, which processes a random app-generated identifier and your purchase receipt. This identifier is not linked to your name, email, or training data. RevenueCat's privacy policy is at <a href="https://www.revenuecat.com/privacy">revenuecat.com/privacy</a>.</p>
-<h2>What we never collect</h2>
-<p>No accounts, no email addresses, no analytics on your training, no advertising identifiers, no selling of data. Your workout data is never transmitted to us or anyone else.</p>
-<h2>Health disclaimer</h2>
-<p>Meso provides training guidance, not medical advice. Consult a health professional before starting a training program.</p>
-<h2>Changes and contact</h2>
-<p>If this policy changes, the update will be posted at this address with a new effective date. Questions: theboss@nathansalt.com.</p>
-<footer>Meso is made by Nathan Salt, Australia.</footer>
-</body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meso: Hypertrophy Coach</title>
+<meta name="description" content="A hypertrophy training app that decides your next set from what you actually lifted. Every rule cited to the research. Works offline, no account.">
+<meta property="og:title" content="Meso: Hypertrophy Coach">
+<meta property="og:description" content="Volume you have to earn. Meso reads your logged performance and programs the next week from it.">
+<meta property="og:type" content="website">
+<style>
+  @font-face {
+    font-family: 'Barlow Condensed'; font-style: normal; font-weight: 700; font-display: swap;
+    src: url('./barlow-condensed-700.woff2') format('woff2');
+  }
+  :root {
+    --paper: #05070f; --card: #12172a; --ink: #f2f4ff;
+    --ink-2: rgba(210, 219, 250, 0.66); --ink-3: rgba(210, 219, 250, 0.38);
+    --line: rgba(126, 138, 178, 0.28); --accent: #3e5eff; --accent-text: #93a6ff;
+    --display: 'Barlow Condensed', -apple-system, 'SF Pro Display', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent-text); }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 64px 0 8px; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; }
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(40px, 8vw, 68px);
+    line-height: 1.04; margin: 22px 0 0; text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--accent-text); }
+  .lede { font-size: clamp(18px, 2.4vw, 21px); color: var(--ink-2); max-width: 46ch; margin: 18px 0 0; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 8px; align-items: center; }
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-weight: 650; padding: 13px 22px; border-radius: 12px;
+  }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .note { color: var(--ink-3); font-size: 14px; }
+  section { padding: 56px 0; border-top: 1px solid var(--line); margin-top: 56px; }
+  h2 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4.6vw, 40px);
+    line-height: 1.1; margin: 0 0 14px;
+  }
+  .grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: var(--card); border-radius: 16px; padding: 22px; }
+  .card h3 { font-size: 18px; margin: 0 0 8px; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+  .shots { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); align-items: start; }
+  .shots figure { margin: 0; }
+  .shots img { width: 100%; border-radius: 14px; display: block; border: 1px solid var(--line); }
+  .shots figcaption { color: var(--ink-3); font-size: 14px; margin-top: 10px; }
+  ul.rules { list-style: none; padding: 0; margin: 0; }
+  ul.rules li { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+  ul.rules li b { color: var(--ink); font-weight: 650; }
+  ul.rules li:last-child { border-bottom: none; }
+  footer { padding: 40px 0 64px; color: var(--ink-3); font-size: 14.5px; }
+  footer a { margin-right: 18px; display: inline-block; }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --paper: #f2f2f7; --card: #ffffff; --ink: #0b0d14;
+      --ink-2: rgba(60, 60, 67, 0.7); --ink-3: rgba(60, 60, 67, 0.45);
+      --line: rgba(60, 60, 67, 0.16); --accent: #2b48e6; --accent-text: #2440d1;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">MESO</div>
+    <h1>Volume you have to <em>earn</em>.</h1>
+    <p class="lede">Meso reads what you actually lifted and writes next week from it. Beat last week and it adds a
+      set. Stall and it holds. Every rule comes from published research, and you can read the papers in the app.</p>
+    <div class="cta">
+      <a class="btn" href="#how">How it works</a>
+      <a class="btn ghost" href="support.html">Support</a>
+    </div>
+    <p class="note">Coming to the App Store. iPhone. Works offline, no account needed.</p>
+  </header>
+
+  <section id="how">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Tells you the weight</h3>
+        <p>Open a session and the numbers are already there: the load, the rep window, and how many reps to leave in
+          reserve. Lift, log what happened, and the next week is written from it.</p>
+      </div>
+      <div class="card">
+        <h3>Adds volume only when you earn it</h3>
+        <p>Extra sets arrive when your logged performance improves. Soreness and joint pain can hold volume back or
+          cut it, but they never add it, because feeling wrecked is not evidence of growth.</p>
+      </div>
+      <div class="card">
+        <h3>Shows its working</h3>
+        <p>Every rule in the engine is cited to the literature, in plain language, inside the app. If you want to
+          check whether the app is guessing, you can.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A look at it</h2>
+    <div class="shots">
+      <figure>
+        <img src="shots/01-workout.jpg" alt="A workout screen showing prescribed weight, rep range and reps in reserve, with last week's numbers beside each set." loading="lazy">
+        <figcaption>Your next set, decided from what you actually lifted.</figcaption>
+      </figure>
+      <figure>
+        <img src="shots/02-muscles.jpg" alt="A body map with muscles coloured by how much work they have had this week against an evidence-based band." loading="lazy">
+        <figcaption>Every muscle against the volume the research supports.</figcaption>
+      </figure>
+      <figure>
+        <img src="shots/06-science.jpg" alt="The Science tab, listing each engine rule with links to the studies behind it." loading="lazy">
+        <figcaption>Every rule cited. Check our work.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>The rules it runs on</h2>
+    <ul class="rules">
+      <li><b>Performance is the accelerator.</b> Beat last week's best sets on a muscle and it earns one more weekly
+        set; stall and it holds; regress and it drops (Mann 2010; Helms 2018; Enes 2024).</li>
+      <li><b>Soreness is only a brake.</b> Soreness tracks damage and novelty, not growth, so it can hold volume back
+        but never add it (Damas 2016; Damas 2018).</li>
+      <li><b>Reps first, then load.</b> Climb the rep window, then add roughly 2.5 to 5 percent. Go heavier than asked
+        and hold it, and that becomes your working weight (Plotkin 2022).</li>
+      <li><b>Failure is rationed.</b> Sets ramp from 3 reps in reserve down to 1. Only isolation work touches failure,
+        and only in the last hard week (Robinson 2024; Refalo 2023).</li>
+      <li><b>Deloads are scheduled, and early when the data says so.</b> Two weeks of regression across several
+        muscles pulls the deload forward, because a sustained performance drop is the validated overreaching signal
+        (Bell 2023; Meeusen 2013).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Wherever you train</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Gym</h3>
+        <p>Barbells, machines and cables, with plate maths and warm-up ramps built in.</p>
+      </div>
+      <div class="card">
+        <h3>Home</h3>
+        <p>Programs that need a floor, a wall and a sturdy table. The same engine, different lever.</p>
+      </div>
+      <div class="card">
+        <h3>Bar park</h3>
+        <p>Calisthenics progressions that advance the movement when you top the rep window. Log vest weight and it
+          switches to load progression.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="accessibility.html">Accessibility</a>
+    <a href="suitability.html">Training readiness</a>
+    <p style="margin-top:18px">Meso is training guidance, not medical advice.</p>
+  </footer>
+</div>
+</body>
+</html>
