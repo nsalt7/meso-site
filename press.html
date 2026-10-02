@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-itunes-app" content="app-id=6789395189">
+<title>Meso Press Kit</title>
+<meta name="description" content="Press kit for Meso, the hypertrophy training app that decides next week from what you actually lifted. Description, key facts, icon and screenshots.">
+<meta property="og:title" content="Meso Press Kit">
+<meta property="og:description" content="Description, key facts, app icon and screenshots for Meso.">
+<meta property="og:image" content="https://mesohypertrophy.com/og.jpg">
+<meta name="theme-color" content="#f2f2f7">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="page.css">
+<style>
+  /* Press kit only: a wider sheet for the screenshot grid, on page.css tokens. */
+  main.press { max-width: 940px; }
+  .top, footer { max-width: 940px; }
+  .lead { font-size: 18px; color: var(--ink-2); margin: 0 0 6px; }
+  .kicker { font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent-text); margin: 0 0 8px; }
+  dl.facts { display: grid; grid-template-columns: 170px 1fr; margin: 12px 0 0; border-top: 1px solid var(--line); }
+  dl.facts dt, dl.facts dd { margin: 0; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  dl.facts dt { font-weight: 650; color: var(--ink); }
+  dl.facts dd { color: var(--ink-2); }
+  @media (max-width: 600px) {
+    dl.facts { grid-template-columns: 1fr; }
+    dl.facts dt { border-bottom: 0; padding-bottom: 0; }
+    dl.facts dd { padding-top: 2px; }
+  }
+  ol.diff { padding-left: 0; list-style: none; counter-reset: d; }
+  ol.diff li { counter-increment: d; display: grid; grid-template-columns: 40px 1fr; gap: 10px; margin: 14px 0; }
+  ol.diff li::before { content: counter(d, decimal-leading-zero); font-family: var(--display); font-weight: 700;
+    font-size: 22px; line-height: 1.2; color: var(--accent-text); }
+  .icons { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; margin-top: 14px; }
+  .icons img { width: 112px; height: 112px; border-radius: 25px; display: block; }
+  .dl { display: flex; flex-wrap: wrap; gap: 10px; }
+  .dl a { display: inline-block; padding: 9px 15px; border: 1px solid var(--line); border-radius: 10px;
+    text-decoration: none; font-weight: 600; font-size: 15px; }
+  .dl a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 16px; }
+  @media (max-width: 600px) { .shots { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+  .shots figure { margin: 0; }
+  .shots img { width: 100%; height: auto; display: block; border-radius: 14px; background: #0b0d14; }
+  .shots figcaption { font-size: 13.5px; margin-top: 7px; color: var(--ink-3); }
+  .shots figcaption a { font-weight: 600; }
+</style>
+</head><body>
+<header class="top"><a href="./"><img src="icon.png" alt="" width="30" height="30"><span>MESO</span></a></header>
+<main class="press">
+<p class="kicker">Press kit</p>
+<h1>Meso: Hypertrophy Coach</h1>
+<p class="lead">Meso is a muscle-building training app for iPhone that writes next week from what you actually lifted. Its progression engine, Earned Volume, adds a weekly set to a muscle only when you beat last week&rsquo;s performance on it; soreness, workload and joint pain can hold volume or pull it back, but never push it up. Every rule the engine follows is written out in plain language in the app, with the published research behind it. Meso ships 123 programs and 311 exercises for the gym, home and the bar park, works offline, and needs no account.</p>
+<div class="dl" style="margin-top:18px">
+  <a class="primary" href="press-kit/meso-press-kit.zip" download>Download the press kit (icon and screenshots, ZIP)</a>
+  <a href="https://apps.apple.com/app/apple-store/id6789395189?ct=press">View on the App Store</a>
+</div>
+
+<h2>Key facts</h2>
+<dl class="facts">
+  <dt>Founder</dt><dd>Nathan Salt, who designs and builds Meso as a solo developer in Australia</dd>
+  <dt>Platform</dt><dd>iPhone and iPad, on the App Store</dd>
+  <dt>Account</dt><dd>None. Meso is local-first: training data stays on the device and the app works offline. Backups are a file you save yourself.</dd>
+  <dt>Engine</dt><dd>Earned Volume, Meso&rsquo;s own progression engine. Every rule carries citations to the research, readable in the app&rsquo;s Science tab.</dd>
+  <dt>Library</dt><dd>123 programs and 311 exercises across gym, home and calisthenics</dd>
+  <dt>Business model</dt><dd>The first mesocycle is free. Meso Pro unlocks longer programs and continued training.</dd>
+  <dt>Contact</dt><dd><a href="mailto:support@mesohypertrophy.com?subject=Press%20enquiry">support@mesohypertrophy.com</a>, the same address as <a href="support.html">Support</a>. Put &ldquo;Press&rdquo; in the subject.</dd>
+</dl>
+
+<h2>What makes it different</h2>
+<ol class="diff">
+  <li><div><b>Volume is earned, not scheduled.</b> A muscle gets one more weekly set only when its lifts beat last week. Stall and it holds; regress and it drops.</div></li>
+  <li><div><b>How you feel is a brake, never an accelerator.</b> Soreness, workload and joint pain can hold or reduce volume. They can never add it.</div></li>
+  <li><div><b>The evidence is in the app.</b> Each rule is explained in plain language with the papers behind it, and where an exact number is convention rather than settled evidence, the app says so.</div></li>
+  <li><div><b>Bodyweight training progresses too.</b> Calisthenics and home programs advance to a harder variation when you top the rep range, and switch to load progression when you log vest weight.</div></li>
+  <li><div><b>Deloads come on schedule, or early when the data says so.</b> Two weeks of falling performance across several muscles brings the deload forward.</div></li>
+  <li><div><b>No account, no server.</b> Meso works offline and keeps training data on the device.</div></li>
+</ol>
+
+<h2>App icon</h2>
+<p>A white flexed arm on a black tile. Please use it as supplied: no recolouring, outlines or added effects.</p>
+<div class="icons">
+  <img src="press-kit/meso-icon-512.png" alt="The Meso app icon: a white flexed arm on a black tile." width="112" height="112">
+  <div class="dl">
+    <a href="press-kit/meso-icon-1024.png" download>PNG, 1024 px</a>
+    <a href="press-kit/meso-icon-512.png" download>PNG, 512 px</a>
+    <a href="press-kit/meso-icon.svg" download>SVG</a>
+  </div>
+</div>
+
+<h2>Screenshots</h2>
+<p>Current App Store screenshots, iPhone, 1290 by 2796 pixels. Tap a link for the full-size PNG.</p>
+<div class="shots">
+  <figure><img src="press-kit/shots/meso-01-workout.jpg" alt="A Meso workout: prescribed weight, rep window and reps in reserve for every set." loading="lazy" width="430" height="932"><figcaption><a href="press-kit/shots/meso-01-workout.png" download>Workout</a></figcaption></figure>
+  <figure><img src="press-kit/shots/meso-02-muscles.jpg" alt="A body map with each muscle measured against its weekly volume band." loading="lazy" width="430" height="932"><figcaption><a href="press-kit/shots/meso-02-muscles.png" download>Muscle map</a></figcaption></figure>
+  <figure><img src="press-kit/shots/meso-05-calisthenics-intermediate.jpg" alt="Calisthenics programs in the program picker." loading="lazy" width="430" height="932"><figcaption><a href="press-kit/shots/meso-05-calisthenics-intermediate.png" download>Calisthenics</a></figcaption></figure>
+  <figure><img src="press-kit/shots/meso-06-science.jpg" alt="The Science tab, every rule with its citations." loading="lazy" width="430" height="932"><figcaption><a href="press-kit/shots/meso-06-science.png" download>Science</a></figcaption></figure>
+  <figure><img src="press-kit/shots/meso-07-strength.jpg" alt="Estimated one-rep max per lift, session by session, with a trend line." loading="lazy" width="430" height="932"><figcaption><a href="press-kit/shots/meso-07-strength.png" download>Strength</a></figcaption></figure>
+  <figure><img src="press-kit/shots/meso-09-overview.jpg" alt="The whole mesocycle at a glance: schedule and weekly volume per muscle." loading="lazy" width="430" height="932"><figcaption><a href="press-kit/shots/meso-09-overview.png" download>Overview</a></figcaption></figure>
+</div>
+
+<h2>Health note</h2>
+<p>Meso provides training guidance, not medical advice.</p>
+</main>
+<footer>Meso is made by Nathan Salt, Australia. See also <a href="support.html">Support</a>, our <a href="privacy.html">Privacy Policy</a>, and the <a href="guides/">training guides</a>.</footer>
+</body></html>
