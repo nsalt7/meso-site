@@ -4,123 +4,141 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meso: Hypertrophy Coach</title>
-<meta name="description" content="A hypertrophy training app that decides your next set from what you actually lifted. Every rule cited to the research. Works offline, no account.">
+<meta name="description" content="A hypertrophy training app that decides your next set from what you actually lifted. Every rule cited to the research. Train with a friend phone to phone. Works offline, no account.">
 <meta property="og:title" content="Meso: Hypertrophy Coach">
 <meta property="og:description" content="Volume you have to earn. Meso reads your logged performance and writes next week from it.">
-<meta property="og:image" content="shots/02-muscles.jpg">
+<meta property="og:image" content="https://mesohypertrophy.com/og.jpg">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#05070f">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f2f2f7">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="preload" href="barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   @font-face {
     font-family: 'Barlow Condensed'; font-style: normal; font-weight: 700; font-display: swap;
     src: url('./barlow-condensed-700.woff2') format('woff2');
   }
+  /* The app's light tokens (app/style.css), so the site reads as the product. */
   :root {
-    --paper: #05070f; --card: #12172a; --ink: #f2f4ff;
-    --ink-2: rgba(210, 219, 250, 0.68); --ink-3: rgba(210, 219, 250, 0.4);
-    --line: rgba(126, 138, 178, 0.24); --accent: #3e5eff; --accent-text: #93a6ff;
-    --good: #30d158;
+    --paper: #f2f2f7; --card: #ffffff; --ink: #000000;
+    --ink-2: rgba(60, 60, 67, 0.72); --ink-3: rgba(60, 60, 67, 0.5);
+    --line: rgba(60, 60, 67, 0.16); --well: rgba(118, 118, 128, 0.12);
+    --accent: #2b48e6; --accent-deep: #1d33b8; --accent-text: #2440d1;
+    --accent-soft: rgba(43, 72, 230, 0.1); --accent-glow: rgba(43, 72, 230, 0.32);
+    --pro-text: #9a7100; --pro-soft: rgba(245, 179, 1, 0.16); --good: #34c759;
     --display: 'Barlow Condensed', -apple-system, 'SF Pro Display', sans-serif;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; background: var(--paper); color: var(--ink);
-    font: 17px/1.62 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased; overflow-x: hidden;
   }
   a { color: var(--accent-text); text-underline-offset: 3px; }
+  img { display: block; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
 
-  /* ---------- hero: the gym behind, the product in front ---------- */
-  .hero { position: relative; overflow: hidden; padding: 0 0 40px; }
-  .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background: url('hero-bg.jpg') center/cover no-repeat;
-    filter: grayscale(25%) brightness(0.55); z-index: -2;
-  }
+  /* ---------- hero: the bright gym behind, the product in front ---------- */
+  .hero { position: relative; overflow: hidden; padding-bottom: 30px; isolation: isolate; }
+  .hero-bg { position: absolute; inset: 0 0 auto 0; height: 100%; z-index: -2;
+    background: url('gym-light.webp') 62% 30%/cover no-repeat; }
   .hero::after {
     content: ''; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(180deg, rgba(5,7,15,0.55) 0%, rgba(5,7,15,0.82) 55%, var(--paper) 100%);
+    background:
+      linear-gradient(90deg, rgba(246,246,248,0.94) 0%, rgba(246,246,248,0.78) 42%, rgba(246,246,248,0.08) 72%),
+      linear-gradient(180deg, rgba(242,242,247,0) 60%, var(--paper) 100%);
   }
-  .nav { display: flex; align-items: center; gap: 14px; padding: 26px 0 0; }
-  .mark { width: 34px; height: 34px; border-radius: 9px; background: #000; display: grid; place-items: center; }
-  .mark img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
-  .brand { font-family: var(--display); font-weight: 700; font-size: 21px; letter-spacing: 0.04em; }
+  .nav { display: flex; align-items: center; gap: 12px; padding: 24px 0 0; }
+  .mark { width: 34px; height: 34px; border-radius: 9px; overflow: hidden; background: #000; }
+  .mark img { width: 100%; height: 100%; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 23px; letter-spacing: 0.06em; }
   .nav .spacer { flex: 1; }
-  .nav a { color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 600; }
-  .hero-grid { display: grid; gap: 34px; grid-template-columns: 1.05fr 0.95fr; align-items: center; padding: 54px 0 0; }
+  .nav a { color: var(--ink); text-decoration: none; font-size: 15px; font-weight: 600; margin-left: 14px; }
+  .hero-grid { display: grid; gap: 30px; grid-template-columns: 1.1fr 0.9fr; align-items: center; padding: 46px 0 0; }
+  .kicker, .eyebrow {
+    font-family: var(--display); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    font-size: 14px; color: var(--ink-2); margin: 0 0 10px;
+  }
   h1 {
-    font-family: var(--display); font-weight: 700; font-size: clamp(46px, 7.4vw, 82px);
-    line-height: 0.98; margin: 0; letter-spacing: -0.01em; text-wrap: balance;
+    font-family: var(--display); font-weight: 700; font-size: clamp(54px, 8.4vw, 96px);
+    line-height: 0.92; margin: 0; letter-spacing: -0.005em; text-wrap: balance;
   }
-  h1 em { font-style: italic; color: var(--accent-text); }
-  .lede { font-size: clamp(17px, 2vw, 20px); color: var(--ink-2); max-width: 44ch; margin: 20px 0 0; }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 10px; align-items: center; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { font-size: clamp(17px, 2vw, 20px); color: var(--ink-2); max-width: 42ch; margin: 18px 0 0; }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 14px; align-items: center; }
   .btn {
-    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
-    font-weight: 650; padding: 14px 24px; border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(62, 94, 255, 0.35);
+    display: inline-flex; align-items: center; gap: 9px; background: var(--accent); color: #fff; text-decoration: none;
+    font-weight: 650; padding: 14px 22px; border-radius: 12px; box-shadow: 0 10px 26px var(--accent-glow);
   }
-  .btn.ghost { background: rgba(255,255,255,0.06); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
-  .pill {
-    display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600;
-    color: var(--ink-2); border: 1px solid var(--line); border-radius: 99px; padding: 6px 13px;
+  .btn:hover { background: var(--accent-deep); }
+  .btn svg { width: 17px; height: 17px; fill: currentColor; }
+  .btn.ghost { background: var(--card); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .btn.ghost:hover { background: #fff; border-color: rgba(60,60,67,0.3); }
+  .facts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; font-weight: 600; color: var(--ink-2); margin: 0; padding: 0; list-style: none; }
+  .facts li { display: inline-flex; align-items: center; gap: 7px; }
+  .facts li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .phone {
+    width: 100%; max-width: 320px; margin: 0 auto; border-radius: 34px; padding: 9px;
+    background: linear-gradient(145deg, #c9c5bd, #8f8b84 45%, #b9b5ad); box-shadow: 0 34px 70px rgba(10, 14, 30, 0.28);
   }
-  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
-  .hero-shot { position: relative; }
-  .hero-shot img {
-    width: 100%; max-width: 340px; margin: 0 auto; display: block; border-radius: 22px;
-    border: 1px solid var(--line); box-shadow: 0 40px 90px rgba(0,0,0,0.6);
-  }
+  .phone img { width: 100%; height: auto; border-radius: 26px; background: #fff; }
 
-  /* ---------- alternating feature rows ---------- */
-  section { padding: 78px 0 0; }
-  .row { display: grid; gap: 40px; grid-template-columns: 1fr 1fr; align-items: center; padding: 34px 0; }
-  .row:nth-child(even) .row-media { order: 2; }
-  .row img { width: 100%; max-width: 320px; border-radius: 18px; border: 1px solid var(--line); display: block; margin: 0 auto; }
-  .eyebrow {
-    font-family: var(--display); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    font-size: 13px; color: var(--accent-text); margin: 0 0 10px;
-  }
-  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.06; margin: 0 0 12px; }
-  .row p { color: var(--ink-2); margin: 0; }
+  /* ---------- feature rows ---------- */
+  section { padding: 70px 0 0; }
+  .row { display: grid; gap: 44px; grid-template-columns: 1fr 1fr; align-items: center; padding: 30px 0; }
+  .row.flip .row-media { order: 2; }
+  .row .phone { max-width: 290px; }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 5vw, 54px); line-height: 0.98; margin: 0 0 14px; text-wrap: balance; }
+  h2 em { font-style: normal; color: var(--accent); }
+  .row p, .lead { color: var(--ink-2); margin: 0 0 12px; max-width: 46ch; text-wrap: pretty; }
+  .eyebrow.new { color: var(--accent-text); }
 
-  /* ---------- rules ---------- */
-  .rules { border-top: 1px solid var(--line); margin-top: 60px; }
-  .rules ol { list-style: none; counter-reset: r; padding: 0; margin: 26px 0 0; }
-  .rules li { counter-increment: r; display: grid; grid-template-columns: 46px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); }
-  .rules li::before {
-    content: counter(r, decimal-leading-zero); font-family: var(--display); font-weight: 700;
-    font-size: 26px; color: var(--accent-text); line-height: 1.1;
-  }
-  .rules b { display: block; font-weight: 650; margin-bottom: 2px; }
-  .rules span { color: var(--ink-2); font-size: 16px; }
-  .rules cite { display: block; margin-top: 6px; color: var(--ink-3); font-size: 13.5px; font-style: normal; }
-
-  /* ---------- environments ---------- */
-  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: 26px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
-  .card h3 { font-family: var(--display); font-size: 22px; margin: 0 0 8px; font-weight: 700; }
+  /* ---------- small cards ---------- */
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: 24px; }
+  .card { background: var(--card); border-radius: 16px; padding: 22px; }
+  .card h3 { font-family: var(--display); font-size: 25px; line-height: 1.05; margin: 0 0 8px; font-weight: 700; }
   .card p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
 
-  footer { margin-top: 78px; border-top: 1px solid var(--line); padding: 34px 0 70px; color: var(--ink-3); font-size: 14.5px; }
+  /* ---------- the rules: the app's board, dark slate with white type ---------- */
+  .rules ol { list-style: none; counter-reset: r; padding: 0; margin: 22px 0 0; background: var(--card); border-radius: 16px; }
+  .rules li { counter-increment: r; display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--line); }
+  .rules li:last-child { border-bottom: 0; }
+  .rules li::before {
+    content: counter(r, decimal-leading-zero); font-family: var(--display); font-weight: 700;
+    font-size: 30px; color: var(--accent); line-height: 1;
+  }
+  .rules b { display: block; font-weight: 650; margin-bottom: 3px; }
+  .rules span { color: var(--ink-2); font-size: 16px; }
+  .rules cite { display: block; margin-top: 7px; color: var(--ink-3); font-size: 13.5px; font-style: normal; }
+
+  /* ---------- library stats ---------- */
+  .stats { display: flex; flex-wrap: wrap; gap: 10px 40px; margin: 6px 0 4px; }
+  .stat b { font-family: var(--display); font-size: 64px; line-height: 1; display: block; }
+  .stat small { font-family: var(--display); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 13px; color: var(--ink-2); }
+
+  /* ---------- private + pricing ---------- */
+  .pair { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  .panel { background: var(--card); border-radius: 18px; padding: 28px; }
+  .panel h2 { font-size: clamp(32px, 4vw, 42px); }
+  .panel p { color: var(--ink-2); margin: 0 0 10px; }
+  .pro { display: inline-block; font-family: var(--display); font-weight: 700; letter-spacing: 0.14em; font-size: 13px;
+    color: var(--pro-text); background: var(--pro-soft); border-radius: 6px; padding: 3px 8px; margin-bottom: 12px; }
+
+  footer { margin-top: 70px; border-top: 1px solid var(--line); padding: 30px 0 60px; color: var(--ink-3); font-size: 14.5px; }
   footer nav a { margin-right: 20px; display: inline-block; margin-bottom: 8px; }
 
   @media (max-width: 760px) {
-    .hero-grid, .row { grid-template-columns: 1fr; }
-    .row:nth-child(even) .row-media { order: 0; }
-    .hero-grid { padding-top: 34px; }
-  }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --paper: #f2f2f7; --card: #ffffff; --ink: #0b0d14;
-      --ink-2: rgba(60, 60, 67, 0.72); --ink-3: rgba(60, 60, 67, 0.48);
-      --line: rgba(60, 60, 67, 0.14); --accent: #2b48e6; --accent-text: #2440d1;
-    }
-    .hero::after { background: linear-gradient(180deg, rgba(5,7,15,0.62) 0%, rgba(5,7,15,0.5) 45%, var(--paper) 100%); }
-    .nav a, .brand, h1, .lede, .pill { color: #fff; }
-    .btn.ghost { color: #fff; border-color: rgba(255,255,255,0.28); }
+    .hero-grid, .row, .pair { grid-template-columns: 1fr; }
+    .row.flip .row-media { order: 0; }
+    .hero-grid { padding-top: 30px; }
+    .hero::after { background:
+      linear-gradient(180deg, rgba(246,246,248,0.9) 0%, rgba(246,246,248,0.84) 46%, rgba(242,242,247,0.55) 70%, var(--paper) 100%); }
+    .nav a.hide-sm { display: none; }
+    .row { gap: 22px; }
+    .phone { max-width: 270px; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
@@ -128,34 +146,65 @@
 <body>
 
 <div class="hero">
+  <div class="hero-bg" role="img" aria-label="A bright gym: squat racks with blue plates against a white brick wall."></div>
   <div class="wrap">
     <div class="nav">
-      <div class="mark"><img src="icon.png" alt=""></div>
+      <div class="mark"><img src="icon.png" alt="" width="34" height="34"></div>
       <span class="brand">MESO</span>
       <span class="spacer"></span>
-      <a href="#rules">The rules</a>
+      <a class="hide-sm" href="#friend">With a friend</a>
+      <a class="hide-sm" href="#rules">The rules</a>
       <a href="support.html">Support</a>
     </div>
     <div class="hero-grid">
       <div>
+        <p class="kicker">Hypertrophy coach · Earned Volume</p>
         <h1>Volume you have to <em>earn</em>.</h1>
         <p class="lede">Meso reads what you actually lifted and writes next week from it. Beat last week and it adds a
           set. Stall and it holds. Every rule comes from published research, and the papers are in the app.</p>
         <div class="cta">
-          <a class="btn" href="https://apps.apple.com/app/meso-hypertrophy-coach/id6789395189">Get Meso on the App Store</a>
+          <a class="btn" href="https://apps.apple.com/app/meso-hypertrophy-coach/id6789395189"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.27-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.12 2.76-2.23.87-1.28 1.23-2.51 1.25-2.58-.03-.01-2.4-.92-2.42-3.66zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.1 1.76-.96 2.8 1.01.08 2.05-.52 2.68-1.28z"/></svg>Get Meso on the App Store</a>
           <a class="btn ghost" href="#rules">See how it decides</a>
         </div>
-        <span class="pill"><span class="dot"></span> On the App Store · iPhone · works offline, no account</span>
+        <ul class="facts">
+          <li>First mesocycle free</li>
+          <li>iPhone</li>
+          <li>Works offline, no account</li>
+        </ul>
       </div>
-      <div class="hero-shot"><img src="shots/01-workout.jpg" alt="A Meso workout screen: prescribed weight, rep window and reps in reserve, with last week's numbers beside every set."></div>
+      <div class="phone"><img src="shots/01-workout.webp" width="720" height="1561" alt="Meso's Train screen: today's session, a Start button beside With a friend, last session one tap away, and the numbers to beat from last week."></div>
     </div>
   </div>
 </div>
 
 <div class="wrap">
-  <section>
+  <section id="friend">
     <div class="row">
-      <div class="row-media"><img src="shots/02-muscles.jpg" alt="A body map with each muscle coloured green where this week's sets land inside its evidence-based volume band." loading="lazy"></div>
+      <div class="row-media"><div class="phone"><img src="shots/04-logger-friend.webp" width="720" height="1561" loading="lazy" alt="A Back Squat in the logbook-style logger: each set shows weight, reps and last week, with a training partner's set logged just underneath."></div></div>
+      <div>
+        <p class="eyebrow new">Train with a friend</p>
+        <h2>Their sets <em>under yours</em>.</h2>
+        <p>Share today's workout with a friend's phone nearby, then see each other's sets as you log them. It runs
+          straight between the two phones in the room: no account, no server, and nothing arrives on a phone until
+          its owner taps Accept.</p>
+        <p>Lifts you both do count toward your own progress. Their extras are logged without changing your program.</p>
+      </div>
+    </div>
+
+    <div class="row flip">
+      <div class="row-media"><div class="phone"><img src="shots/10-challenge.webp" width="720" height="1561" loading="lazy" alt="The monthly challenge: 16 of 23 lifts beaten, a barbell loading up with plates, and the list of lifts beaten this month."></div></div>
+      <div>
+        <p class="eyebrow new">Monthly challenges</p>
+        <h2>Beat last week. <em>Fill the bar.</em></h2>
+        <p>Every lift where you beat last week's best set counts toward this month's target, sized to your plan, so
+          the challenge rewards the same thing the engine does.</p>
+        <p>Special days like Halloween and Christmas Day are earned with one finished session. Every badge you earn
+          lives on the Performance tab.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-media"><div class="phone"><img src="shots/02-muscles.webp" width="720" height="1561" loading="lazy" alt="A body map with each muscle coloured green where this week's planned sets land inside its evidence-based volume band."></div></div>
       <div>
         <p class="eyebrow">Coverage</p>
         <h2>See exactly where the work is going</h2>
@@ -164,29 +213,44 @@
           colour it is and what would change it.</p>
       </div>
     </div>
-    <div class="row">
-      <div class="row-media"><img src="shots/06-science.jpg" alt="The Science tab, listing each engine rule with links to the studies behind it." loading="lazy"></div>
+  </section>
+
+  <section>
+    <p class="eyebrow">At the bar</p>
+    <h2>Built for the session, not the spreadsheet</h2>
+    <div class="grid">
+      <div class="card"><h3>Reads like a training log</h3><p>Last week on every row, plates on the bar, warm-up ramps worked out, and a gold mark when you set a PB.</p></div>
+      <div class="card"><h3>Last session, one tap away</h3><p>Train opens on today's workout and the numbers to beat, with your last session one tap away.</p></div>
+      <div class="card"><h3>Light, Dark or System</h3><p>Pick the look in Settings, or let your phone decide. Either way, the rest timer runs full screen, timed for the movement.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="row flip">
+      <div class="row-media"><div class="phone"><img src="shots/06-science.webp" width="720" height="1561" loading="lazy" alt="The Science tab: the rules and the papers behind them, starting with the core rule that volume is earned."></div></div>
       <div>
         <p class="eyebrow">Evidence</p>
-        <h2>Every rule cited. Check our work.</h2>
-        <p>Other apps say science-based. Meso shows the papers: each rule the engine follows is written in plain
-          language with its citations, in the app, where you can read them mid-session if you want to.</p>
+        <h2>Every rule cited. <em>Check our work.</em></h2>
+        <p>Science-based is easy to say. Meso shows the papers: each rule the engine follows is written in plain
+          language with its citations, in the app, where you can read them mid-session if you want to. Where a rule is
+          coaching convention rather than evidence, it says so.</p>
       </div>
     </div>
   </section>
 
   <section class="rules" id="rules">
     <p class="eyebrow">How it decides</p>
-    <h2>Five rules, and the research behind them</h2>
+    <h2>Five rules at the core, and the research behind them</h2>
     <ol>
       <li><div><b>Performance is the accelerator</b><span>Beat last week's best sets on a muscle and it earns one more
         weekly set. Stall and it holds. Regress and it drops.</span><cite>Mann 2010 · Helms 2018 · Enes 2024</cite></div></li>
-      <li><div><b>Soreness is only a brake</b><span>Soreness tracks damage and novelty, not growth, so it can hold
-        volume back or cut it, but it never earns more.</span><cite>Damas 2016 · Damas 2018</cite></div></li>
+      <li><div><b>Soreness and pain are only brakes</b><span>Soreness tracks damage and novelty, not growth, so it can
+        hold volume back or cut it, but it never earns more. A lift you mark Painful holds its weight instead of
+        climbing.</span><cite>Damas 2016 · Damas 2018</cite></div></li>
       <li><div><b>Reps first, then load</b><span>Climb the rep window, then add roughly 2.5 to 5 percent. Go heavier
         than asked and hold it across every set, and that becomes your working weight.</span><cite>Plotkin 2022</cite></div></li>
       <li><div><b>Failure is rationed</b><span>Sets ramp from three reps in reserve down to one. Only isolation work
-        touches failure, and only in the last hard week.</span><cite>Robinson 2024 · Refalo 2023 · Zourdos 2016</cite></div></li>
+        touches failure, only in the last hard week, and never on a lift you can't bail out of.</span><cite>Robinson 2024 · Refalo 2023 · Zourdos 2016</cite></div></li>
       <li><div><b>Deloads come early when the data says so</b><span>Two weeks of regression across several muscles
         pulls the deload forward, because a sustained performance drop is the validated overreaching
         signal.</span><cite>Bell 2023 · Meeusen 2013</cite></div></li>
@@ -194,12 +258,43 @@
   </section>
 
   <section>
-    <p class="eyebrow">Anywhere</p>
-    <h2>Gym, home, or a bar in a park</h2>
+    <div class="row">
+      <div class="row-media"><div class="phone"><img src="shots/05-calisthenics-intermediate.webp" width="720" height="1561" loading="lazy" alt="The Plan tab filtered to calisthenics: bar park programs by level, split and days per week."></div></div>
+      <div>
+        <p class="eyebrow">The library</p>
+        <div class="stats">
+          <div class="stat"><b>300+</b><small>Exercises</small></div>
+          <div class="stat"><b>100+</b><small>Programs</small></div>
+        </div>
+        <h2>Gym, home, or a bar in a park</h2>
+        <p>Every exercise has a coaching cue and easy swaps. Flag a sore joint and Meso offers swaps that go easier on
+          it, and progressions never step into a movement that loads it.</p>
+      </div>
+    </div>
     <div class="grid">
-      <div class="card"><h3>Gym</h3><p>Barbells, machines and cables, with plate maths and warm-up ramps built in.</p></div>
-      <div class="card"><h3>Home</h3><p>Programs that need a floor, a wall and a sturdy table. Same engine, different lever.</p></div>
+      <div class="card"><h3>Gym</h3><p>Barbells, dumbbells, machines and cables, with plate maths and warm-up ramps built in.</p></div>
+      <div class="card"><h3>Home</h3><p>No equipment: a floor, a wall and a sturdy chair. Same engine, different lever.</p></div>
       <div class="card"><h3>Bar park</h3><p>Calisthenics progressions that advance the movement when you top the rep window. Log vest weight and it switches to load progression.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="pair">
+      <div class="panel">
+        <p class="eyebrow">Private by design</p>
+        <h2>Your training stays on your phone</h2>
+        <p>No account, no sign-up, no server. Meso works offline, and you can export a backup file any time. A
+          workout goes to a friend's phone only when you choose to share it.</p>
+        <p><a href="privacy.html">Read the privacy policy</a></p>
+      </div>
+      <div class="panel">
+        <span class="pro">MESO PRO</span>
+        <h2>Your first mesocycle is free</h2>
+        <p>Your first block is on us. If Meso earns its keep, Meso Pro unlocks longer programs and
+          continued training, as a monthly or annual plan or a one-time lifetime purchase. The price shows in your
+          local currency in the app before you buy.</p>
+        <p><a href="support.html">Billing questions</a></p>
+      </div>
     </div>
   </section>
 
@@ -212,6 +307,7 @@
       <a href="mailto:support@mesohypertrophy.com">support@mesohypertrophy.com</a>
     </nav>
     <p>Meso is training guidance, not medical advice. Train with your clinician's blessing if something is injured.</p>
+    <p>Meso is made by Nathan Salt, Australia.</p>
   </footer>
 </div>
 </body>
