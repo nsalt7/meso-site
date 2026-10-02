@@ -1,0 +1,21 @@
+/* Guide pages: page.css plus a kicker, a lede, the App Store call to action,
+   and the list of other guides. Same light tokens and display face. */
+.top .crumb { margin-left: auto; font-weight: 600; font-size: 15px; color: var(--accent-text); }
+.kicker { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 8px; }
+h1 { font-size: clamp(38px, 6vw, 50px); text-wrap: balance; }
+.lede { font-size: 18.5px; color: var(--ink); }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; justify-content: space-between;
+  margin: 34px 0 6px; padding: 20px 22px; border-radius: 16px; background: var(--paper); border: 1px solid var(--line); }
+.cta div { flex: 1 1 280px; }
+.cta b { display: block; font-family: var(--display); font-size: 24px; line-height: 1.1; color: var(--ink); }
+.cta span { display: block; color: var(--ink-2); font-size: 15.5px; margin-top: 4px; }
+.cta .store { line-height: 0; }
+.cta .store img { height: 54px; width: auto; }
+.list, .more ul { list-style: none; padding: 0; margin: 18px 0 0; }
+.list li, .more li { margin: 0 0 10px; }
+.list a, .more a { display: block; text-decoration: none; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); }
+.list a:hover, .more a:hover { border-color: var(--accent); }
+.list b, .more b { display: block; font-family: var(--display); font-size: 22px; line-height: 1.1; color: var(--ink); }
+.list span, .more span { display: block; font-size: 15px; color: var(--ink-2); margin-top: 3px; }
+.more { max-width: 720px; margin: 26px auto 0; padding: 0 20px; }
+.refs li { font-size: 14px; color: var(--ink-3); margin: 6px 0; }
